@@ -9,9 +9,14 @@ db = mongo_client.db
 @app.route('/login',methods = ['POST','GET'])
 def login():
     if(request.method == 'POST'):
-        if(request.form["userName"] =="spa"):
-            db.flask.insert_one(dict(request.form))
-            return redirect(url_for('success'))
+        if(request.form):
+            email = request.form['userName']
+            password = request.form['password'] 
+            if(len(email)>0 and len(password)>0):
+                db.flask.insert_one(dict(request.form))
+                return redirect(url_for('landing'))
+            else:
+                return ("please fill details")    
         else:
             return redirect(url_for('indexsignup'))
     else:
@@ -37,7 +42,9 @@ def success():
 def indexsignup():
     return render_template('sign_up.html')
 
-
+@app.route('/dashboard')
+def landing():
+    return render_template('dash_board.html')
 
 @app.route('/forgotpassword')
 def forgotpassword():
