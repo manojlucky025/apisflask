@@ -6,6 +6,11 @@ app = Flask(__name__)
 mongo_client=PyMongo(app,uri="mongodb+srv://manoj:manoj@cluster0.gnr87.mongodb.net/myFirstDatabase?retryWrites=true&w=majority")
 db = mongo_client.db
 
+@app.route("/")
+def home():
+    return render_template("home.html")
+    
+
 @app.route('/login',methods = ['POST','GET'])
 def login():
     if(request.method == 'POST'):
@@ -42,13 +47,13 @@ def success():
 def indexsignup():
     return render_template('sign_up.html')
 
-@app.route('/dashboard')
+@app.route('/home')
 def landing():
-    return render_template('dash_board.html')
+    return render_template('home.html')
 
 @app.route('/forgotpassword')
 def forgotpassword():
     return render_template('forgot_password.html')
 
-if __name__ == "__main__" :
+if __name__ == "_main_" :
     app.run(debug=True)
